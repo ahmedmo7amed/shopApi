@@ -9,10 +9,13 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PaymentController;
+use App\Filament\Resources\ContactUsResource\Pages\ContactUsForm;
 use Illuminate\Support\Facades\Session;
 
-
-//Route::get('/', [ProductController::class, 'index'])->name('home');
+//
+//Route::get('/', function (){
+//    return view('index');
+//});
 Route::get('/',[\App\Http\Controllers\HomeController::class,'index']);
 Route::get('/landing' , function (){
     return view('pages.landing-page');
@@ -52,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
         Route::view('dashboard-04', 'dashboard.dashboard-04')->name('dashboard-04');
         Route::view('dashboard-05', 'dashboard.dashboard-05')->name('dashboard-05');
     });
+//    Route::get('/contact-us', [ContactUsForm::class])->name('contact-us');
 
     Route::prefix('widgets')->group(function () {
         Route::view('general-widget', 'widgets.general-widget')->name('general-widget');
@@ -77,7 +81,7 @@ Route::middleware(['auth'])->group(function () {
     Route::view('kanban', 'kanban')->name('kanban');
 
     Route::prefix('ecommerce')->group(function () {
-        Route::view('product', 'apps.product')->name('product');
+        Route::get('products', [ProductController::class, 'index'])->name('product');
         Route::get('/products/page/{product?}', [ProductController::class, 'show'])->name('product-page');
        // Route::get('products/{product}', [ProductController::class, 'show'])->name('product-page');
         //Route::view('page-product', 'apps.product-page')->name('product-page');
@@ -417,7 +421,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cart/update/{product}', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 
-    Route::get('/cart', [CartController::class, 'index'])->name('cart')->middleware('auth');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
 
     // Wishlist Routes

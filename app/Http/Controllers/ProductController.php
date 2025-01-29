@@ -2,16 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
+
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('options.values')->paginate(12);
-        //$products = Product::paginate(12);
-        return view('products.index', compact('products'));
+//        $products = Product::with('options.values')->paginate(12);
+//        $products = Product::paginate(12);
+        $products = Product::with('options.values')
+            ->when($request->category_id, function ($query) use ($request) {
+                return $query->where('category_id', $request->category_id);
+            })
+            ->when($request->option_id, function ($query) use ($request) {
+                return $query->whereHas('options', function ($query) use ($request) {
+                    $query->where('id', $request->option_id);
+                });
+            })
+            ->paginate(12);
+        $categories = Category::all();
+
+
+        return view('products.index', compact('products', 'categories'));
     }
     public function search(){
         return view('product.list-products');

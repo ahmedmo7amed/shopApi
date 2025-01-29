@@ -12,12 +12,12 @@ class HomeController extends Controller
     public function index()
     {   $products = Product::paginate(12);
         $bestSellingProductsLeft = Product::where('is_best_selling', true)->take(4)->get(); // مثال لجلب 4 منتجات من الأفضل مبيعًا
-
+        $categories = Category::with('products')->get();
         $bestSellingProductsRight = Product::where('is_best_selling', true)->take(1)->get(); // منتج واحد فقط من الأفضل مبيعًا
         //$testimonials = Testimonial::all(); // مثال لجلب كل التعليقات من العملاء
         $showSidebar = false;
 
-        return view('index', compact('products'));
+        return view('index', compact('products','bestSellingProductsLeft','bestSellingProductsRight','categories','showSidebar'));
 
     }
     public function home()

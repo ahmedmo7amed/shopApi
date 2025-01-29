@@ -152,29 +152,29 @@
 
                                     </div>
 
-                                    <h2>الخيارات:</h2>
-                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="capacity">اختار السعة:</label>
-                                            <select name="capacity" id="capacity" class="form-control">
-                                                @foreach($product->options as $option)
-                                                    <optgroup label="{{ $option->name }}">
-                                                        @foreach($option->values as $value)
-                                                            <option value="{{ $value->id }}"
-                                                                    data-length="{{ $value->length }}"
-                                                                    data-diameter="{{ $value->diameter }}"
-                                                                    data-height="{{ $value->height }}">
-                                                                {{ $value->value }} - الطول: {{ $value->length }} سم - القطر: {{ $value->diameter }} سم - الارتفاع: {{ $value->height }} سم
-                                                            </option>
-                                                        @endforeach
-                                                    </optgroup>
-                                                @endforeach
-                                            </select>
-                                        </div>
+{{--                                    <h2>الخيارات:</h2>--}}
+{{--                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">--}}
+{{--                                        @csrf--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label for="capacity">اختار السعة:</label>--}}
+{{--                                            <select name="capacity" id="capacity" class="form-control">--}}
+{{--                                                @foreach($product->options as $option)--}}
+{{--                                                    <optgroup label="{{ $option->name }}">--}}
+{{--                                                        @foreach($option->values as $value)--}}
+{{--                                                            <option value="{{ $value->id }}"--}}
+{{--                                                                    data-length="{{ $value->length }}"--}}
+{{--                                                                    data-diameter="{{ $value->diameter }}"--}}
+{{--                                                                    data-height="{{ $value->height }}">--}}
+{{--                                                                {{ $value->value }} - الطول: {{ $value->length }} سم - القطر: {{ $value->diameter }} سم - الارتفاع: {{ $value->height }} سم--}}
+{{--                                                            </option>--}}
+{{--                                                        @endforeach--}}
+{{--                                                    </optgroup>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
 
-                                        <button type="submit" class="btn btn-primary mt-3">إضافة إلى السلة</button>
-                                    </form>
+{{--                                        <button type="submit" class="btn btn-primary mt-3">إضافة إلى السلة</button>--}}
+{{--                                    </form>--}}
 
                                     <!-- Wishlist Toggle -->
                                     <div class="col-auto">

@@ -52,14 +52,14 @@
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
     <!-- tap on tap ends-->
     <!-- page-wrapper Start-->
-    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+    <div class="compact-wrapper" id="pageWrapper">
       <!-- Page Header Start-->
-      @include('layouts.simple.header')
+{{--      @include('layouts.simple.header')--}}
       <!-- Page Header Ends -->
       <!-- Page Body Start-->
       <div class="page-body-wrapper">
         <!-- Page Sidebar Start-->
-        @include('layouts.simple.sidebar')
+{{--        @include('layouts.simple.sidebar')--}}
         <!-- Page Sidebar Ends-->
         <div class="page-body">
           @include('layouts.simple.breadcrumb')

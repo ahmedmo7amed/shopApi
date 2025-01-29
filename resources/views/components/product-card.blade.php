@@ -30,7 +30,7 @@
                         <li>
                             <form action="{{ route('cart.add', $product) }}" method="POST" class="d-inline">
                                 @csrf
-                                <button type="submit" class="btn" data-bs-toggle="tooltip" title="Add to Cart">
+                                <button type="submit" class="btn btn-sm" data-bs-toggle="tooltip" title="Add to Cart">
                                     <i data-feather="shopping-cart"></i>
                                 </button>
                             </form>
@@ -76,8 +76,8 @@
                 @endif
             </div>
             <div class="addcart-btn">
-                <a class="btn btn-primary" href="{{ route('cart') }}">Add to Cart</a>
-                <a class="btn btn-primary ms-2" href="{{ route('product-page', $product) }}">View Details</a>
+                <a class="btn btn-primary ms-2 btn-sm" href="{{ route('cart') }}">Add to Cart</a>
+                <a class="btn btn-primary m-2 btn-sm" href="{{ route('product-page', $product) }}">View Details</a>
             </div>
             @if($product->stock_status === 'in_stock')
                 <span class="badge bg-success mt-2">In Stock</span>

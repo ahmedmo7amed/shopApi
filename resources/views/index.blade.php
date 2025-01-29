@@ -1,4 +1,4 @@
-@extends('layouts.simple.master')
+@extends('layouts.app')
 
 @section('title', 'Home')
 
@@ -8,182 +8,248 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/range-slider.css') }}">
 @endsection
 
-@section('style')
-@endsection
-
-@section('breadcrumb-title')
-    <h3>Welcome to Our Store</h3>
-@endsection
-
-@section('breadcrumb-items')
-    <li class="breadcrumb-item active">Home</li>
-@endsection
-
 @section('content')
-    <div class="container-fluid home-wrapper">
-
-        <!-- Menu Bar -->
-        <div class="menu-bar">
-            <!-- Add your menu items here -->
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-industrial fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="خزانات السلام" width="120">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">عن المصنع</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">المنتجات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">اتصل بنا</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
 
-        <!-- Cover Image -->
-        <div class="cover-image">
-            <img src="{{ asset('assets/images/store-cover.jpg') }}" class="img-fluid w-100" alt="Cover Image">
-        </div>
-
-        <!-- Featured Products -->
-        <div class="product-grid">
-            <div class="row">
-                @isset($products)
-                    @foreach($products as $product)
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="product-box">
-                            <!-- Product 1: 2 Grid Size -->
-                            <div class="product-img">
-                                <img src="{{ asset('assets/images/products/product-1.jpg') }}" class="img-fluid" alt="Product 1">
-                            </div>
-                            <div class="product-details">
-                                <h4>{{$product->name}}</h4>
-                                <p>{{$product->description}}.</p>
-                                <div class="product-price">$50.00</div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                    @endisset
-                </div><!-- end row -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="product-box">
-                            <!-- Product 2: 2 Grid Size -->
-                            <div class="product-img">
-                                <img src="{{ asset('assets/images/products/product-2.jpg') }}" class="img-fluid" alt="Product 2">
-                            </div>
-                            <div class="product-details">
-                                <h4>Product 2</h4>
-                                <p>Description of product 2.</p>
-                                <div class="product-price">$40.00</div>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Hero Section -->
+    <header class="industrial-hero">
+        <div class="hero-overlay">
+            <div class="container text-center">
+                <h1 class="display-4 fw-bold mb-4">خزانات السلام للمياه</h1>
+                <p class="lead">جودة عالية - تصميم متطور - عمر افتراضي طويل</p>
+                <div class="hero-cta mt-5">
+                    <a href="#products" class="btn btn-danger btn-lg mx-2">تصفح المنتجات</a>
+                    <a href="#contact" class="btn btn-outline-light btn-lg mx-2">طلب استشارة</a>
                 </div>
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="product-box">
-                            <!-- Product 3: Full Width Product -->
-                            <div class="product-img">
-                                <img src="{{ asset('assets/images/products/product-3.jpg') }}" class="img-fluid" alt="Product 3">
-                            </div>
-                            <div class="product-details">
-                                <h4>Product 3</h4>
-                                <p>Description of product 3.</p>
-                                <div class="product-price">$80.00</div>
-                            </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="industrial-about py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="{{ asset('assets/images/factory.jpg') }}" class="img-fluid rounded shadow" alt="عن المصنع">
+                </div>
+                <div class="col-md-6 py-4">
+                    <h2 class="fw-bold mb-4">مصنع خزانات السلام</h2>
+                    <p class="lead text-muted">
+                        نقدم حلول تخزين المياه الأكثر أمانًا منذ عام 1998. نوفر خزانات المياه البلاستيكية بأنواعها المختلفة وفق أعلى معايير الجودة العالمية.
+                    </p>
+                    <div class="features-list mt-4">
+                        <div class="feature-item">
+                            <i class="fas fa-certificate"></i>
+                            <span>ضمان 10 سنوات ضد التسريب</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-tools"></i>
+                            <span>تصنيع وفق المقاييس السعودية</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>مواد خام مصرح بها من وزارة الصحة</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Best Selling Products -->
-        <div class="best-selling-section">
-            <h3>Best Selling Products</h3>
-            <div class="row">
-                <!-- Left Side (4 Products) -->
-                <div class="col-md-8">
-                    <div class="row">
-                        @isset($bestSellingProductsLeft)
-                        @foreach($bestSellingProductsLeft as $product)
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="product-box">
-                                        <div class="product-img">
-                                            <img src="{{ asset('storage/' . $product->images[0]) }}" class="img-fluid" alt="{{ $product->name }}">
+    <!-- Products Section -->
+    <section id="products" class="industrial-products py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">منتجاتنا</h2>
+
+            @foreach($categories as $category)
+                <div class="product-category mb-5">
+                    <h3 class="category-title">{{ $category->name }}</h3>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        @foreach($category->products as $product)
+                            <div class="col">
+                                <div class="card product-card h-100">
+                                    <div class="product-badge">ضمان 10 سنوات</div>
+                                    <img src="{{ asset('storage/' . $product->images[0]) }}" class="card-img-top" alt="{{ $product->name }}">
+                                    <div class="card-body">
+                                        <h5 class="product-name">{{ $product->name }}</h5>
+                                        <div class="product-specs">
+                                            <div class="spec-item">
+                                                <i class="fas fa-ruler-combined"></i>
+                                                <span>السعة: {{ $product->capacity }} لتر</span>
+                                            </div>
+                                            <div class="spec-item">
+                                                <i class="fas fa-arrows-alt-v"></i>
+                                                <span>الارتفاع: {{ $product->height }} سم</span>
+                                            </div>
+                                            <div class="spec-item">
+                                                <i class="fas fa-weight-hanging"></i>
+                                                <span>الوزن: {{ $product->weight }} كجم</span>
+                                            </div>
                                         </div>
-                                        <div class="product-details">
-                                            <h4>{{ $product->name }}</h4>
-                                            <p>{{ \Illuminate\Support\Str::limit($product->description, 100) }}</p>
-                                            <div class="product-price">${{ number_format($product->price, 2) }}</div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="product-price">{{ number_format($product->price) }} ريال</span>
+                                            <a href="{{ route('products.show', $product) }}" class="btn btn-industrial">
+                                                التفاصيل <i class="fas fa-chevron-left"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
-                        @endisset
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="industrial-certifications bg-dark text-white py-5">
+        <div class="container text-center">
+            <h3 class="mb-5">شهادات الجودة والاعتماد</h3>
+            <div class="row justify-content-center g-4">
+                <div class="col-auto">
+                    <img src="{{ asset('assets/images/cert1.png') }}" alt="شهادة الجودة" width="100">
+                </div>
+                <div class="col-auto">
+                    <img src="{{ asset('assets/images/cert2.png') }}" alt="شهادة البيئة" width="100">
+                </div>
+                <div class="col-auto">
+                    <img src="{{ asset('assets/images/cert3.png') }}" alt="شهادة الصحة" width="100">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="industrial-contact py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="contact-info bg-light p-4 rounded shadow">
+                        <h4 class="mb-4">معلومات التواصل</h4>
+                        <ul class="contact-list">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>الــدمام - الـفيصلية - شارع أبوبكر الصديق</span>
+                                <span>الــخبر - الـثقبة - الشارع الرابع</span>
+
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+966554289000</span>
+                            </li>
+                            <li>
+                                <i class="fab fa-whatsapp"></i>
+                                <span>+966554289000</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>info@alsalamtanks.com</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-                <!-- Right Side (1 Big Product) -->
-                <div class="col-md-4">
-                    @isset($products)
-                    @foreach($products as $product)
-                        <div class="card">
-                            <div class="product-box">
-                                <div class="product-img">
-                                    <img src="{{ asset('storage/' . $product->images[0]) }}" class="img-fluid" alt="{{ $product->name }}">
-                                </div>
-                                <div class="product-details">
-                                    <h4>{{ $product->name }}</h4>
-                                    <p>{{ \Illuminate\Support\Str::limit($product->description, 100) }}</p>
-                                    <div class="product-price">${{ number_format($product->price, 2) }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                    @endisset
-                </div>
             </div>
         </div>
+    </section>
 
-        <!-- Image Section (Full Width) -->
-        <div class="full-width-image">
-            <img src="{{ asset('assets/images/store-banner.jpg') }}" class="img-fluid w-100" alt="Banner Image">
-        </div>
+    <!-- Custom CSS -->
+    <style>
+        .bg-industrial {
+            background-color: #2c3e50 !important;
+        }
 
-        <!-- Customer Testimonials Carousel -->
-        <div class="customer-testimonials">
-            <h3>What Our Customers Say</h3>
-            <div id="customerCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    @isset($testimonials)
-                    @foreach($testimonials as $key => $testimonial)
-                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                            <div class="testimonial">
-                                <p>{{ $testimonial->message }}</p>
-                                <h5>{{ $testimonial->customer_name }}</h5>
-                                <p>{{ $testimonial->customer_location }}</p>
-                            </div>
-                        </div>
-                    @endforeach
-                    @endisset
-                </div>
-                <a class="carousel-control-prev" href="#customerCarousel" role="button" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#customerCarousel" role="button" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </a>
-            </div>
-        </div>
+        .industrial-hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.8)),
+            url('{{ asset("assets/images/hero-bg.jpg") }}');
+            height: 80vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            margin-top: 76px;
+        }
 
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <p>&copy; 2025 Our Store. All rights reserved.</p>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        .product-card {
+            border: none;
+            transition: transform 0.3s;
+        }
 
-    </div>
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        .category-title {
+            border-right: 5px solid #e74c3c;
+            padding-right: 1rem;
+            margin: 2rem 0;
+        }
+
+        .btn-industrial {
+            background: #e74c3c;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+        }
+
+        .btn-industrial:hover {
+            background: #c0392b;
+            color: white;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .spec-item i {
+            color: #e74c3c;
+            margin-left: 0.5rem;
+        }
+    </style>
 @endsection
-
 @section('script')
     <script src="{{ asset('assets/js/range-slider/ion.rangeSlider.min.js') }}"></script>
     <script src="{{ asset('assets/js/range-slider/rangeslider-script.js') }}"></script>

@@ -41,8 +41,6 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -57,11 +55,16 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-        ->navigationItems([
-        // ...
-        NavigationItem::make('Quotes')
-            ->icon('heroicon-o-document-text')
-            ->url('/admin/quotes')
-    ]);
+            ->navigationItems([
+                NavigationItem::make('Quotes')
+                    ->icon('heroicon-o-document-text')
+                    ->url('/admin/quotes'),
+
+                NavigationItem::make('Products')
+                    ->icon('heroicon-o-shopping-bag')
+                    ->url('/products')
+                    ->visible(fn() => true),
+            ]);
     }
 }
+

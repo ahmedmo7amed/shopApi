@@ -151,9 +151,54 @@
 @section('content')
     <!-- الهيدر والمحتوى الآخر يبقى كما هو -->
 
+
+    <header class="industrial-hero" style="color: #196ea1;">
+        <div class="hero-overlay">
+            <div class="container text-center">
+                <h1 class="display-4 fw-bold mb-4">خزانات السلام للمياه</h1>
+                <p class="lead">جودة عالية - تصميم متطور - عمر افتراضي طويل</p>
+                <div class="hero-cta mt-5">
+                    <a href="#products" class="btn btn-screen btn-lg mx-2">تصفح المنتجات</a>
+                    <a href="#contact" class="btn btn-pill btn-lg mx-2 m-2">طلب استشارة</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="industrial-about py-5" style="background-color: #316789;">
+        <div class="container">
+            <div class="row align-items-center" style="background-color: #316789;">
+                <div class="col-md-6">
+                    <img src="{{ asset('assets/images/banner/pexels-photo-15798797-1024x682.jpg') }}" class="img-fluid rounded shadow" alt="عن المصنع">
+                </div>
+                <div class="col-md-6 py-4" >
+                    <h2 class="fw-bold mb-4">مصنع خزانات السلام</h2>
+                    <p class="lead text-muted">
+                        نقدم حلول تخزين المياه الأكثر أمانًا منذ عام 1998. نوفر خزانات المياه البلاستيكية بأنواعها المختلفة وفق أعلى معايير الجودة العالمية.
+                    </p>
+                    <div class="features-list mt-4">
+                        <div class="feature-item">
+                            <i class="fas fa-certificate"></i>
+                            <span>ضمان 10 سنوات ضد التسريب</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-tools"></i>
+                            <span>تصنيع وفق المقاييس السعودية</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>مواد خام مصرح بها من وزارة الصحة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <main class="products py-5">
         <div class="container">
-            <h2 class="text-center mb-5 fw-bold text-dark">نماذج من منتجاتنا</h2>
+            <h2 class="text-center mb-5 fw-bold text-dark" id="#products">نماذج من منتجاتنا</h2>
 
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 @foreach ($categories as $category)
@@ -193,25 +238,21 @@
                                             @endphp
                                             <div class="col-6 mb-2">
                                                 <div class="spec-item bg-dark p-2 rounded">
-                                                    <i class="fas fa-ruler-combined text-danger"></i>
                                                     السعة: {{ $firstValue->value }} لتر
                                                 </div>
                                             </div>
                                             <div class="col-6 mb-2">
                                                 <div class="spec-item bg-dark p-2 rounded">
-                                                    <i class="fas fa-ruler-combined text-danger"></i>
                                                     الارتفاع: {{ $firstValue->height }} سم
                                                 </div>
                                             </div>
                                             <div class="col-6 mb-2">
                                                 <div class="spec-item bg-dark p-2 rounded">
-                                                    <i class="fas fa-layer-group text-danger"></i>
                                                     الطول: {{ $firstValue->length }} مم
                                                 </div>
                                             </div>
                                             <div class="col-6 mb-2">
                                                 <div class="spec-item bg-dark p-2 rounded">
-                                                    <i class="fas fa-paint-roller text-danger"></i>
                                                     القطر: {{ $firstValue->diameter }} سم
                                                 </div>
                                             </div>
@@ -242,18 +283,19 @@
                                         }
                                     @endphp
 
-                                    <a href="https://wa.me/249128436851?text={{ $message }}"
+                                    <a href="https://wa.me/966554289000?text={{ $message }}"
                                        class="btn btn-industrial btn-lg btn-danger text-white text-decoration-none"
                                        target="_blank">
-                                        <i class="fas fa-file-invoice-dollar me-2"></i>
-                                        اطلب عرض سعر
+                                        <i class="far fa-hand-point-left"></i>
+                                        اطلب من الواتس أب
                                     </a>
-
                                     <a href="{{ route('products.show', $product->id) }}"
                                        class="btn btn-outline-dark btn-lg">
-                                        التفاصيل الفنية
+                                        أطلب الان
                                     </a>
-                                </div>
+
+
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -263,32 +305,12 @@
     </main>
 
 
-<nav class="bg-gray-900 shadow-xl sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-20">
-            <!-- Logo -->
-            <div class="flex-shrink-0 flex items-center">
-                <a href="/" class="flex items-center">
-                    <i class="fas fa-industry text-red-600 text-3xl mr-2"></i>
-                    <span class="text-2xl font-bold text-white">
-                        <span class="text-red-600">صناعات</span> الحديد
-                    </span>
-                </a>
-            </div>
-
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-8">
-
-                <!-- CTA Button -->
-                <a href="#" class="ml-8 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md font-medium transition-colors duration-300 flex items-center">
-                    <i class="fas fa-file-invoice mr-2"></i>اطلب عرض سعر
-                </a>
-            </div>
+    <!-- شريط التنقل -->
+    <nav class="navbar navbar-expand-lg text-bg-light">
+        <div class="m-3 container px-4 px-lg-5">
+            <h4 class="m-3 text-bg"> خــــزانات مياه </h4>
         </div>
-
-    </div>
-</nav>
-
+    </nav>
 
 <div class="container-fluid product-wrapper">
     <div class="product-grid">
@@ -315,7 +337,7 @@
             <div class="row">
 
                 <!-- Products Grid -->
-                <div class="col-md-12">
+                <div class="col-md-12" id="#products">
                     <div class="row">
                         @forelse($products as $product)
                             <div class="col-xl-3 col-sm-6 xl-3">
@@ -377,7 +399,7 @@
                                             <h4>{{ $product->name }}</h4>
                                             <p>{{\Illuminate\Support\Str::limit($product->description, 100) }}</p>
                                             <div class="product-price">
-                                                ${{ number_format($product->price, 2) }}
+                                                  ريال {{ number_format($product->price, 2) }}
                                             </div>
                                         </div>
                                     </div>
@@ -403,11 +425,12 @@
         </div>
     </div>
 </div>
-    <header class="bg-dark py-5">
+    <header class="bg-dark py-5" style="background:linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{asset("assets/images/banner/pexels-photo-12586759-1024x682.jpg")}}) no-repeat center center; background-size: cover;">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Shop in style</h1>
-                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                <h1 class="display-4 fw-bolder">
+                    "خزانات السلام، الحل الأمثل للحفاظ على نقاء المياه وحمايتها من التلوث." </h1>
+                <p class="lead fw-normal text-white-50 mb-0"> " سواء في المنازل أو المزارع أو المشاريع الكبرى، خزانات السلام توفر لك الأمان والجودة التي تستحقها." </p>
             </div>
         </div>
     </header>
@@ -443,25 +466,41 @@
                                 @if(isset($product->discount_price))
                                     <span class="text-muted text-decoration-line-through">{{$product->price}}</span>
                                     <div class="product-price">
-                                        ${{ number_format($product->price, 2) }}
+                                        ريال {{ number_format($product->price, 2) }}
                                     </div>
                                 @else
                                     <div class="product-price">
-                                        ${{ number_format($product->price, 2) }}
+                                        ريال {{ number_format($product->price, 2) }}
                                     </div>
                                 @endif
 
                             </div>
                         </div>
+
+                        @php
+                            // بناء نص الرسالة
+                            $message = 'أرغب في طلب المنتج التالي: ' . urlencode($product->name) . '%0A';
+                            $message .= 'رابط المنتج: ' . urlencode(url('products/' . $product->id)) . '%0A';
+
+                            foreach($product->options as $option) {
+                                $firstValue = $option->values->first();
+                                $message .= urlencode('السعة: ' . ($firstValue->value ?? 'N/A') . ' لتر ') . '%0A';
+                                $message .= urlencode('الارتفاع: ' . ($firstValue->height ?? 'N/A') . ' سم ') . '%0A';
+                                $message .= urlencode('الطول: ' . ($firstValue->length ?? 'N/A') . ' مم ') . '%0A';
+                                $message .= urlencode('القطر: ' . ($firstValue->diameter ?? 'N/A') . ' سم ') . '%0A';
+                            }
+                        @endphp
+
+
                         <!-- Product actions-->
                         <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#"> أطلب من الواتس أب </a></div>
+                            <div class="text-center"><a class="btn  mt-auto" style="background-color: #0d9488;color: #FFFAFA" href="https://wa.me/966554289000?text={{ $message }}"> أطلب من الواتس أب </a></div>
                         </div>
                         <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#"> أطلب عرض سعر </a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ route('products.show', $product->id) }}"> أطلب عرض سعر </a></div>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{route('cart.add',$product)}}">Add to cart</a></div>
                         </div>
                     </div>
                 </div>
@@ -486,7 +525,7 @@
                         <div class="col-12">
                             <textarea class="form-control form-control-lg"
                                       rows="4"
-                                      placeholder="المواصفات المطلوبة"></textarea>
+                                      placeholder=" أترك رسالتك "></textarea>
                         </div>
                         <div class="col-12">
                             <button class="btn btn-danger btn-lg w-100">
