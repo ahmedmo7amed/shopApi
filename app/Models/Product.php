@@ -25,7 +25,7 @@ class Product extends Model
         'status',
         'stock_status',
         'slug',
-        'images',
+        'images' => 'array',
         'is_best_selling',
     ];
 
@@ -42,7 +42,6 @@ class Product extends Model
     public function quotes()
     {
         return $this->belongsToMany(Quote::class)
-            ->using(ProductQuote::class)
             ->withPivot('quantity', 'unit_price', 'tax_rate');
     }
     public function options()

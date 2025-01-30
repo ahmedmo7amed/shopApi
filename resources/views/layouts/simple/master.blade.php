@@ -32,8 +32,9 @@
     <link id="color" rel="stylesheet" href={{asset('assets/css/color-1.css')}} media="screen">
     <!-- Responsive css -->
     <link rel="stylesheet" type="text/css" href={{asset('assets/css/responsive.css')}}>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-  </head>
+</head>
   <body>
   @php
       use Illuminate\Support\Str;
@@ -54,7 +55,9 @@
     <!-- page-wrapper Start-->
     <div class="compact-wrapper" id="pageWrapper">
       <!-- Page Header Start-->
-{{--      @include('layouts.simple.header')--}}
+
+      @include('layouts.app')
+
       <!-- Page Header Ends -->
       <!-- Page Body Start-->
       <div class="page-body-wrapper">

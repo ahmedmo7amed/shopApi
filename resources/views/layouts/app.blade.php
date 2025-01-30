@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'متجر إلكتروني')</title>
+    <title>@yield('title', 'مصنع السلام ')</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
      <!-- Fontawesome css -->
      <link rel="stylesheet" type="text/css" href={{asset('assets/css/fontawesome.css')}}>
@@ -50,7 +52,7 @@
 <body class="font-light antialiased cairo-font">
     <nav class="navbar navbar-expand-lg navbar-light bg-light align-content-between">
         <a class="navbar-brand" href="/">
-            <img src="http://localhost:8000/assets/images/logo/logo.png" alt="Logo"
+            <img src="{{asset('assets/images/logo/logo-icon.png')}}" alt=" صنع السلام "
                  class="img-fluid w-sm-200 w-md-150 w-lg-100" loading="lazy" style="max-width: 50px; height: auto;">
         </a>
         <div class="container px-4">
@@ -63,11 +65,11 @@
                     <li class="nav-item" > Contact Us:<a style="color: #000; font-size: 15px; text-decoration: none;" href="tel:+966554289000"> +966554289000</a> | <E> <a style="color: #000; font-size: 15px; text-decoration: none;" href="mailto:info@alsalamtank.com">info@alsalamtank.com</a>  </E >
                      </li>
                 </ul>
-                <form class="d-flex">
+                <form class="d-flex" action="{{route("cart")}}">
                     <button class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">  {{ $cartCount > 0 ? $cartCount : '0' }}</span>
                     </button>
                 </form>
             </div>
@@ -102,10 +104,27 @@
                         <a class="nav-link p-2 p-lg-3" href="#contact"> أتصل بنا </a>
                     </li>
                 </ul>
-{{--                <div class="search ps-3 pe-3 d-none d-lg-block">--}}
-{{--                    <i class="fa-solid fa-magnifying-glass"></i>--}}
-{{--                </div>--}}
-{{--                <a class="btn rounded-pill main-btn" href="#"> تسجيل الدخول </a>--}}
+                @php
+                    use Illuminate\Support\Facades\Auth;
+                @endphp
+                @if(Auth::check())
+
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            {{Auth::user()->name}}
+                            <span class="badge bg-dark text-white ms-1 rounded-pill"> 0 </span>
+                        </button>
+
+                @else
+
+                        <div class="search ps-3 pe-3 d-none d-lg-block">
+                            <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path>
+                            </svg>
+                        </div>
+                        <a class="btn rounded-pill main-btn" href="#"> تسجيل الدخول </a>
+
+                @endif
             </div>
         </div>
     </nav>

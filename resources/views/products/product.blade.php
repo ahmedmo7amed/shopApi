@@ -1,4 +1,4 @@
-@extends('layouts.simple.master')
+@extends('layouts.app')
 @section('title', 'Product')
 
 @section('css')
@@ -1957,6 +1957,25 @@
 @endsection
 
 @section('script')
+    <script>
+        function addToCart(productId) {
+            // Create a form dynamically
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/cart/add/' + productId;
+
+            // Add CSRF token
+            var csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
+            form.appendChild(csrfToken);
+
+            // Submit the form
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 <script src="{{asset('assets/js/range-slider/ion.rangeSlider.min.js')}}"></script>
 <script src="{{asset('assets/js/range-slider/rangeslider-script.js')}}"></script>
 <script src="{{asset('assets/js/touchspin/vendors.min.js')}}"></script>

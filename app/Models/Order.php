@@ -32,14 +32,29 @@ class Order extends Model
         'total' => 'decimal:2',
     ];
 
-    public function customer()
+//    public function customer()
+//    {
+//        return $this->belongsTo(Customer::class);
+//    }
+    public function user()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function orderItems()
+    public function items()
     {
         return $this->hasMany(OrderItem::class);
     }
-
+    public function history()
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
+    protected static function booted()
+    {
+        static::saving(function ($order) {
+            $order->total = $order->items->sum(function ($item) {
+                return $item->price * $item->quantity;
+            });
+        });
+    }
 }

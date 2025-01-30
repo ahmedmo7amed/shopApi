@@ -1,4 +1,6 @@
 <script src="{{asset('assets/js/jquery-3.5.1.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- Bootstrap js-->
 <script src="{{asset('assets/js/bootstrap/bootstrap.bundle.min.js')}}"></script>
 <!-- feather icon js-->
@@ -12,4 +14,4 @@
 <!-- Plugins JS Ends-->
 <!-- Theme js-->
 <script src="{{asset('assets/js/script.js')}}"></script>
-<!-- Plugin used-->  
+<!-- Plugin used-->

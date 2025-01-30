@@ -6,7 +6,7 @@ use Laravel\Pail\Files;
 
 return [
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', ' مصنع السلام '),
 
     'env' => env('APP_ENV', 'production'),
 

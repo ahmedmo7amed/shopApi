@@ -2,11 +2,7 @@
 
 @section('title', 'Home')
 
-@section('layouts.simple.css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/select2.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/owlcarousel.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/range-slider.css') }}">
-@endsection
+
 
 @section('content')
     <!-- Main Navigation -->
@@ -21,7 +17,7 @@
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#home">الرئيسية</a>
+                        <a class="nav-link active" href="/">الرئيسية</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#about">عن المصنع</a>
@@ -95,6 +91,9 @@
                             <div class="col">
                                 <div class="card product-card h-100">
                                     <div class="product-badge">ضمان 10 سنوات</div>
+{{--                                    @php--}}
+{{--                                        dd($product->images); // طباعة البيانات للتحقق--}}
+{{--                                    @endphp--}}
                                     <img src="{{ asset('storage/' . $product->images[0]) }}" class="card-img-top" alt="{{ $product->name }}">
                                     <div class="card-body">
                                         <h5 class="product-name">{{ $product->name }}</h5>

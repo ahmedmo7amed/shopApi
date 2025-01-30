@@ -35,12 +35,12 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($product->id);
         $product->load('options.values');
-        // Fetch related products (example logic)
+        $category = $product->category;        // Fetch related products (example logic)
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
             ->take(4)
             ->get();
-        return view('products.show', compact('product' , 'relatedProducts'));
+        return view('products.show', compact('product' , 'relatedProducts', 'category'));
     }
 
     public function create()
@@ -108,11 +108,17 @@ class ProductController extends Controller
     }
     public function byCategory($categoryId)
     {
+        // Fetch the category by its slug
+        $category = Category::where('slug', $categoryId)->firstOrFail();
+
         // Fetch products by category ID
-        $products = Product::where('category_id', $categoryId)->paginate(10);
-        //dd($products);
-        // Return a view or JSON response
-        return view('products.by_category', compact('products'));
+        $products = Product::where('category_id', $category->id)->paginate(10);
+
+        // Return the view with the products and category
+        return view('products.by_category', compact('products', 'category'));
     }
+
+
+
 
 }

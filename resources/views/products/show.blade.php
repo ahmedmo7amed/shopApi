@@ -1,4 +1,4 @@
-@extends('layouts.simple.master')
+@extends('layouts.app')
 
 @section('title', $product->name)
 
@@ -33,9 +33,9 @@
                         @if($product->images)
                             @foreach($product->images as $image)
                                 <div class="item">
-                                    <img src="{{ asset('storage/' . $image) }}"
+                                    <img  src="{{ asset('storage/' . $image) }}"
                                          alt="{{ $product->name }}"
-                                         class="img-fluid">
+                                         class=" img-fluid">
                                 </div>
                             @endforeach
                         @else
@@ -62,14 +62,14 @@
                 <!-- Product Details -->
                 <div class="col-xl-7 col-md-6">
                     <div class="product-page-details">
-                        <h3>{{ $product->name }}</h3>
+                        <h3 style="color: #0c5460">{{ $product->name }}</h3>
                         <div class="product-price mb-3">
                             @if($product->discount_percentage > 0)
-                                <h4 class="text-danger d-inline">${{ number_format($product->discounted_price, 2) }}</h4>
-                                <del class="text-muted ms-2">${{ number_format($product->original_price, 2) }}</del>
+                                <h4 class="text-danger d-inline"> ريــال {{ number_format($product->discounted_price, 2) }}</h4>
+                                <del class="text-muted ms-2"> ريــال {{ number_format($product->original_price, 2) }}</del>
                                 <span class="badge bg-danger ms-2">{{ $product->discount_percentage }}% OFF</span>
                             @else
-                                <h4 class="text-danger">${{ number_format($product->price, 2) }}</h4>
+                                <h4 class="text-danger"> ريـال {{ number_format($product->price, 2) }}</h4>
                             @endif
                         </div>
 
@@ -87,7 +87,7 @@
                         <!-- Stock Status -->
                         <div class="stock-status mb-3">
                             @if($product->stock_status === 'in_stock')
-                                <span class="badge bg-success">In Stock</span>
+                                <span class="badge bg-success"> In Stock </span>
                                 <span class="text-muted ms-2">{{ $product->stock_quantity }} units available</span>
                             @elseif($product->stock_status === 'low_stock')
                                 <span class="badge bg-warning">Low Stock</span>
@@ -205,18 +205,20 @@
 
                         <!-- Categories and Tags -->
                         <div class="product-tags">
-                            <div class="mb-2">
-                                <strong>Category:</strong>
-                                <a href="{{ route('products.by.category', $product->category) }}" class="ms-2">
+                            @if($product->category)
+                                <div class="mb-2">
+                                    <strong>Category:</strong>
+                                    <a href="{{ route('products.by.category', $product->category->id) }}" class="ms-2">
+                                        {{ $product->category->name }}
+                                    </a>
+                                </div>
+                            @endif
 
-                                    {{ $product->category->name }}
-                                </a>
-                            </div>
                             @if(optional($product->tags)->count() > 0)
                                 <div>
                                     <strong>Tags:</strong>
                                     @foreach($product->tags as $tag)
-                                        <a href="{{ route('products.by.tag', $tag) }}" class="badge bg-light text-dark ms-1">
+                                        <a href="{{ route('products.by.tag', $tag->id) }}" class="badge bg-light text-dark ms-1">
                                             {{ $tag->name }}
                                         </a>
                                     @endforeach

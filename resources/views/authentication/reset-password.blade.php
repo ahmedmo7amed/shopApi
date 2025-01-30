@@ -21,7 +21,8 @@
                <div>
                   <div><a class="logo" href="{{ route('index') }}"><img class="img-fluid for-light" src="{{asset('assets/images/logo/login.png')}}" alt="looginpage"><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt="looginpage"></a></div>
                   <div class="login-main">
-                     <form class="theme-form">
+                     <form class="theme-form" action="{{route('password.update')}}" method="POST">
+                       <input type="hidden" name="token" value="{{$request->route('token')}}">
                         <h4>Create Your Password</h4>
                         <div class="form-group">
                            <label class="col-form-label">New Password</label>

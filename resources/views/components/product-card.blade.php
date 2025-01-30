@@ -14,7 +14,7 @@
             @endif
 
             @if($product->images)
-                <img class="img-fluid" src="{{ asset('storage/' . $product->images[0]) }}" alt="{{ $product->name }}">
+                <img class="img-fluid " style="height: 400px;" src="{{ asset('storage/' . $product->images[0]) }}" alt="{{ $product->name }}">
             @else
                 <img class="img-fluid" src="{{ asset('assets/images/product/default.jpg') }}" alt="Default Product Image">
             @endif
@@ -76,11 +76,11 @@
                 @endif
             </div>
             <div class="addcart-btn">
-                <a class="btn btn-primary ms-2 btn-sm" href="{{ route('cart') }}">Add to Cart</a>
+                <a href="#" class="btn btn-primary ms-2 btn-sm" onclick="addToCart({{ $product->id }})">Add to Cart</a>
                 <a class="btn btn-primary m-2 btn-sm" href="{{ route('product-page', $product) }}">View Details</a>
             </div>
             @if($product->stock_status === 'in_stock')
-                <span class="badge bg-success mt-2">In Stock</span>
+                <span class="badge bg-success mt-2" style="color: #FFFAFA">In Stock</span>
             @elseif($product->stock_status === 'low_stock')
                 <span class="badge bg-warning mt-2">Low Stock</span>
             @else

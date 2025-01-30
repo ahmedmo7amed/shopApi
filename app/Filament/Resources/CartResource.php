@@ -15,7 +15,7 @@ class CartResource extends Resource
     protected static ?string $model = Cart::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
-    
+
     protected static ?string $navigationGroup = 'Shop Management';
 
     public static function form(Form $form): Form
@@ -72,5 +72,9 @@ class CartResource extends Resource
             'create' => Pages\CreateCart::route('/create'),
             'edit' => Pages\EditCart::route('/{record}/edit'),
         ];
+    }
+    public static function canCreate(): bool
+    {
+        return auth()->user()->hasPermissionTo('create cart items');
     }
 }

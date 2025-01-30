@@ -34,10 +34,15 @@ class Quote extends Model
         'grand_total' => 'decimal:2',
     ];
 
+//    public function products()
+//    {
+//        return $this->belongsToMany(Product::class)
+//            ->using(ProductQuote::class)
+//            ->withPivot(['quantity', 'unit_price', 'tax_rate']);
+//    }
     public function products()
     {
         return $this->belongsToMany(Product::class)
-            ->using(ProductQuote::class)
             ->withPivot(['quantity', 'unit_price', 'tax_rate']);
     }
 

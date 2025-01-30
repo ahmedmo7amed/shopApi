@@ -11,25 +11,33 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PaymentController;
 use App\Filament\Resources\ContactUsResource\Pages\ContactUsForm;
 use Illuminate\Support\Facades\Session;
+use Filament\Facades\Filament;
+use App\Http\Controllers\CustomerAuthController;
+use Laravel\Fortify\Fortify;
 
-//
-//Route::get('/', function (){
-//    return view('index');
-//});
-Route::get('/',[\App\Http\Controllers\HomeController::class,'index']);
-Route::get('/landing' , function (){
+
+// مسار الصفحة الرئيسية
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/landing', function () {
     return view('pages.landing-page');
 });
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'home']);
-Route::get('/search',[ProductController::class, 'search'])->name('search');
+Route::get('/search', [ProductController::class, 'search'])->name('search');
+
+// مسارات للمستخدمين المسجلين
+
 Route::middleware(['auth'])->group(function () {
-    // Dashboard route
+    // إضافة مسارات الخاصة بـ Filament هنا فقط
+   // Filament::routes();
+
+    // مسار لوحة القيادة
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::middleware('auth')->group(function () {
-        Route::resource('cart', CartController::class);
-    });
+
+    // مسار إدارة العربة
+    Route::resource('cart', CartController::class);
+});
 
     ////////////////////////////////////////////////////////////////////
     Route::get('/quotes/{quote}/download', function (Quote $quote) {
@@ -89,7 +97,7 @@ Route::middleware(['auth'])->group(function () {
         Route::view('payment-details', 'apps.payment-details')->name('payment-details');
         Route::view('order-history', 'apps.order-history')->name('order-history');
         Route::view('invoice-template', 'apps.invoice-template')->name('invoice-template');
-        Route::view('cart', 'apps.cart')->name('cart');
+        //Route::view('cart', 'apps.cart')->name('cart');
         Route::view('list-wish', 'apps.list-wish')->name('list-wish');
         Route::view('checkout', 'apps.checkout')->name('checkout');
         Route::view('pricing', 'apps.pricing')->name('pricing');
@@ -281,16 +289,19 @@ Route::middleware(['auth'])->group(function () {
         Route::view('500', 'errors.500')->name('error-500');
         Route::view('503', 'errors.503')->name('error-503');
     });
+        //Fortify::registerRoutes();  // This registers all the Fortify authentication routes, including register
 
     Route::prefix('authentication')->group(function () {
-        Route::view('login', 'authentication.login')->name('login');
+        //Route::get('login',[CustomerAuthController::class, 'showLoginForm'])->name('login');
+        //Route::post('login',[CustomerAuthController::class, 'login'])->name('login');
         Route::view('login-one', 'authentication.login-one')->name('login-one');
         Route::view('login-two', 'authentication.login-two')->name('login-two');
         Route::view('login-bs-validation', 'authentication.login-bs-validation')->name('login-bs-validation');
         Route::view('login-bs-tt-validation', 'authentication.login-bs-tt-validation')->name('login-bs-tt-validation');
         Route::view('login-sa-validation', 'authentication.login-sa-validation')->name('login-sa-validation');
-        Route::view('sign-up', 'authentication.sign-up')->name('sign-up');
-        Route::view('sign-up-one', 'authentication.sign-up-one')->name('sign-up-one');
+        //Route::get('register', [CustomerAuthController::class, 'showRegisterForm'])->name('register');
+        //Route::post('register', [CustomerAuthController::class, 'register'])->name('register');
+          Route::view('sign-up-one', 'authentication.sign-up-one')->name('sign-up-one');
         Route::view('sign-up-two', 'authentication.sign-up-two')->name('sign-up-two');
         Route::view('sign-up-wizard', 'authentication.sign-up-wizard')->name('sign-up-wizard');
         Route::view('unlock', 'authentication.unlock')->name('unlock');
@@ -403,7 +414,7 @@ Route::middleware(['auth'])->group(function () {
     //Route::resource('quotes', QuoteController::class);
 
     // Additional product routes if needed
-    Route::get('products/category/{category}', [ProductController::class, 'byCategory'])->name('products.by.category');
+    Route::get('products/category/{category}', [ProductController::class, 'category'])->name('products.by.category');
     Route::get('products/search', [ProductController::class, 'search'])->name('products.search');
     Route::prefix('products')->group(function () {
         Route::post('{product}/images', [ProductImageController::class, 'store'])->name('product.images.store');
@@ -449,4 +460,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pricing', function () {
         return view('pricing');
     })->name('pricing');
-});
+    //require __DIR__.'/auth.php';
