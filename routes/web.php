@@ -13,32 +13,47 @@ use App\Filament\Resources\ContactUsResource\Pages\ContactUsForm;
 use Illuminate\Support\Facades\Session;
 use Filament\Facades\Filament;
 use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Laravel\Fortify\Fortify;
+use App\Http\Controllers\QuoteController;
+use App\Models\Quote;
+use Illuminate\Support\Facades\Artisan;
 
-
+Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
+Route::get('/resend/verfication/email', [CustomerAuthController::class, 'resendVerification'])->name('resend.email');
+Route::get('/verify', [\App\Http\Controllers\CustomerAuthController::class, 'verify'])->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Foundation\Auth\EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/login');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/quotes/create', [QuoteController::class, 'create'])->name('quotes.create');
+Route::post('/quotes', [QuoteController::class, 'store'])->name('quotes.store');
 // مسار الصفحة الرئيسية
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'home'])->name('home');
 Route::get('/landing', function () {
     return view('pages.landing-page');
 });
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'home']);
+//Route::get('/home', [\App\Http\Controllers\HomeController::class, 'home']);
 Route::get('/search', [ProductController::class, 'search'])->name('search');
 
+Route::get('whatsapp/send', function () {
+    return redirect()->away('https://wa.me/966554289000');
+})->name('whatsapp');
 // مسارات للمستخدمين المسجلين
-
 Route::middleware(['auth'])->group(function () {
     // إضافة مسارات الخاصة بـ Filament هنا فقط
    // Filament::routes();
 
-    // مسار لوحة القيادة
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+//    // مسار لوحة القيادة
+//    Route::get('/dashboard', function () {
+//        return view('dashboard');
+//    })->name('dashboard');
 
     // مسار إدارة العربة
     Route::resource('cart', CartController::class);
 });
 
+    Route::Post('/contact-us', [\App\Http\Controllers\ContactUSController::class,'contactUSPost'])->name('contact-us');
     ////////////////////////////////////////////////////////////////////
     Route::get('/quotes/{quote}/download', function (Quote $quote) {
         return response()->download(
@@ -236,44 +251,44 @@ Route::middleware(['auth'])->group(function () {
         })->name('form-wizard-three-post');
     });
 
-    Route::prefix('tables')->group(function () {
-        Route::view('bootstrap-basic-table', 'tables.bootstrap-basic-table')->name('bootstrap-basic-table');
-        Route::view('bootstrap-sizing-table', 'tables.bootstrap-sizing-table')->name('bootstrap-sizing-table');
-        Route::view('bootstrap-border-table', 'tables.bootstrap-border-table')->name('bootstrap-border-table');
-        Route::view('bootstrap-styling-table', 'tables.bootstrap-styling-table')->name('bootstrap-styling-table');
-        Route::view('table-components', 'tables.table-components')->name('table-components');
-        Route::view('datatable-basic-init', 'tables.datatable-basic-init')->name('datatable-basic-init');
-        Route::view('datatable-advance', 'tables.datatable-advance')->name('datatable-advance');
-        Route::view('datatable-styling', 'tables.datatable-styling')->name('datatable-styling');
-        Route::view('datatable-ajax', 'tables.datatable-ajax')->name('datatable-ajax');
-        Route::view('datatable-server-side', 'tables.datatable-server-side')->name('datatable-server-side');
-        Route::view('datatable-plugin', 'tables.datatable-plugin')->name('datatable-plugin');
-        Route::view('datatable-api', 'tables.datatable-api')->name('datatable-api');
-        Route::view('datatable-data-source', 'tables.datatable-data-source')->name('datatable-data-source');
-        Route::view('datatable-ext-autofill', 'tables.datatable-ext-autofill')->name('datatable-ext-autofill');
-        Route::view('datatable-ext-basic-button', 'tables.datatable-ext-basic-button')->name('datatable-ext-basic-button');
-        Route::view('datatable-ext-col-reorder', 'tables.datatable-ext-col-reorder')->name('datatable-ext-col-reorder');
-        Route::view('datatable-ext-fixed-header', 'tables.datatable-ext-fixed-header')->name('datatable-ext-fixed-header');
-        Route::view('datatable-ext-html-5-data-export', 'tables.datatable-ext-html-5-data-export')->name('datatable-ext-html-5-data-export');
-        Route::view('datatable-ext-key-table', 'tables.datatable-ext-key-table')->name('datatable-ext-key-table');
-        Route::view('datatable-ext-responsive', 'tables.datatable-ext-responsive')->name('datatable-ext-responsive');
-        Route::view('datatable-ext-row-reorder', 'tables.datatable-ext-row-reorder')->name('datatable-ext-row-reorder');
-        Route::view('datatable-ext-scroller', 'tables.datatable-ext-scroller')->name('datatable-ext-scroller');
-        Route::view('jsgrid-table', 'tables.jsgrid-table')->name('jsgrid-table');
-    });
-
-    Route::prefix('charts')->group(function () {
-        Route::view('echarts', 'charts.echarts')->name('echarts');
-        Route::view('chart-apex', 'charts.chart-apex')->name('chart-apex');
-        Route::view('chart-google', 'charts.chart-google')->name('chart-google');
-        Route::view('chart-sparkline', 'charts.chart-sparkline')->name('chart-sparkline');
-        Route::view('chart-flot', 'charts.chart-flot')->name('chart-flot');
-        Route::view('chart-knob', 'charts.chart-knob')->name('chart-knob');
-        Route::view('chart-morris', 'charts.chart-morris')->name('chart-morris');
-        Route::view('chartjs', 'charts.chartjs')->name('chartjs');
-        Route::view('chartist', 'charts.chartist')->name('chartist');
-        Route::view('chart-peity', 'charts.chart-peity')->name('chart-peity');
-    });
+//    Route::prefix('tables')->group(function () {
+//        Route::view('bootstrap-basic-table', 'tables.bootstrap-basic-table')->name('bootstrap-basic-table');
+//        Route::view('bootstrap-sizing-table', 'tables.bootstrap-sizing-table')->name('bootstrap-sizing-table');
+//        Route::view('bootstrap-border-table', 'tables.bootstrap-border-table')->name('bootstrap-border-table');
+//        Route::view('bootstrap-styling-table', 'tables.bootstrap-styling-table')->name('bootstrap-styling-table');
+//        Route::view('table-components', 'tables.table-components')->name('table-components');
+//        Route::view('datatable-basic-init', 'tables.datatable-basic-init')->name('datatable-basic-init');
+//        Route::view('datatable-advance', 'tables.datatable-advance')->name('datatable-advance');
+//        Route::view('datatable-styling', 'tables.datatable-styling')->name('datatable-styling');
+//        Route::view('datatable-ajax', 'tables.datatable-ajax')->name('datatable-ajax');
+//        Route::view('datatable-server-side', 'tables.datatable-server-side')->name('datatable-server-side');
+//        Route::view('datatable-plugin', 'tables.datatable-plugin')->name('datatable-plugin');
+//        Route::view('datatable-api', 'tables.datatable-api')->name('datatable-api');
+//        Route::view('datatable-data-source', 'tables.datatable-data-source')->name('datatable-data-source');
+//        Route::view('datatable-ext-autofill', 'tables.datatable-ext-autofill')->name('datatable-ext-autofill');
+//        Route::view('datatable-ext-basic-button', 'tables.datatable-ext-basic-button')->name('datatable-ext-basic-button');
+//        Route::view('datatable-ext-col-reorder', 'tables.datatable-ext-col-reorder')->name('datatable-ext-col-reorder');
+//        Route::view('datatable-ext-fixed-header', 'tables.datatable-ext-fixed-header')->name('datatable-ext-fixed-header');
+//        Route::view('datatable-ext-html-5-data-export', 'tables.datatable-ext-html-5-data-export')->name('datatable-ext-html-5-data-export');
+//        Route::view('datatable-ext-key-table', 'tables.datatable-ext-key-table')->name('datatable-ext-key-table');
+//        Route::view('datatable-ext-responsive', 'tables.datatable-ext-responsive')->name('datatable-ext-responsive');
+//        Route::view('datatable-ext-row-reorder', 'tables.datatable-ext-row-reorder')->name('datatable-ext-row-reorder');
+//        Route::view('datatable-ext-scroller', 'tables.datatable-ext-scroller')->name('datatable-ext-scroller');
+//        Route::view('jsgrid-table', 'tables.jsgrid-table')->name('jsgrid-table');
+//    });
+//
+//    Route::prefix('charts')->group(function () {
+//        Route::view('echarts', 'charts.echarts')->name('echarts');
+//        Route::view('chart-apex', 'charts.chart-apex')->name('chart-apex');
+//        Route::view('chart-google', 'charts.chart-google')->name('chart-google');
+//        Route::view('chart-sparkline', 'charts.chart-sparkline')->name('chart-sparkline');
+//        Route::view('chart-flot', 'charts.chart-flot')->name('chart-flot');
+//        Route::view('chart-knob', 'charts.chart-knob')->name('chart-knob');
+//        Route::view('chart-morris', 'charts.chart-morris')->name('chart-morris');
+//        Route::view('chartjs', 'charts.chartjs')->name('chartjs');
+//        Route::view('chartist', 'charts.chartist')->name('chartist');
+//        Route::view('chart-peity', 'charts.chart-peity')->name('chart-peity');
+//    });
 
     Route::view('sample-page', 'pages.sample-page')->name('sample-page');
     Route::view('internationalization', 'pages.internationalization')->name('internationalization');
@@ -292,14 +307,15 @@ Route::middleware(['auth'])->group(function () {
         //Fortify::registerRoutes();  // This registers all the Fortify authentication routes, including register
 
     Route::prefix('authentication')->group(function () {
-        //Route::get('login',[CustomerAuthController::class, 'showLoginForm'])->name('login');
-        //Route::post('login',[CustomerAuthController::class, 'login'])->name('login');
+        Route::get('login',[CustomerAuthController::class, 'showLoginForm'])->name('login');
+        Route::post('login',[CustomerAuthController::class, 'login'])->name('login');
+        Route::post('register',[CustomerAuthController::class, 'register'])->name('register');
         Route::view('login-one', 'authentication.login-one')->name('login-one');
         Route::view('login-two', 'authentication.login-two')->name('login-two');
         Route::view('login-bs-validation', 'authentication.login-bs-validation')->name('login-bs-validation');
         Route::view('login-bs-tt-validation', 'authentication.login-bs-tt-validation')->name('login-bs-tt-validation');
         Route::view('login-sa-validation', 'authentication.login-sa-validation')->name('login-sa-validation');
-        //Route::get('register', [CustomerAuthController::class, 'showRegisterForm'])->name('register');
+        Route::get('register', [CustomerAuthController::class, 'showRegisterForm'])->name('register');
         //Route::post('register', [CustomerAuthController::class, 'register'])->name('register');
           Route::view('sign-up-one', 'authentication.sign-up-one')->name('sign-up-one');
         Route::view('sign-up-two', 'authentication.sign-up-two')->name('sign-up-two');
@@ -310,80 +326,80 @@ Route::middleware(['auth'])->group(function () {
         Route::view('maintenance', 'authentication.maintenance')->name('maintenance');
     });
 
-    Route::view('comingsoon', 'comingsoon.comingsoon')->name('comingsoon');
-    Route::view('comingsoon-bg-video', 'comingsoon.comingsoon-bg-video')->name('comingsoon-bg-video');
-    Route::view('comingsoon-bg-img', 'comingsoon.comingsoon-bg-img')->name('comingsoon-bg-img');
-
-    Route::view('basic-template', 'email-templates.basic-template')->name('basic-template');
-    Route::view('email-header', 'email-templates.email-header')->name('email-header');
-    Route::view('template-email', 'email-templates.template-email')->name('template-email');
-    Route::view('template-email-2', 'email-templates.template-email-2')->name('template-email-2');
-    Route::view('ecommerce-templates', 'email-templates.ecommerce-templates')->name('ecommerce-templates');
-    Route::view('email-order-success', 'email-templates.email-order-success')->name('email-order-success');
-
-
-    Route::prefix('gallery')->group(function () {
-        Route::view('index', 'apps.gallery')->name('gallery');
-        Route::view('with-gallery-description', 'apps.gallery-with-description')->name('gallery-with-description');
-        Route::view('gallery-masonry', 'apps.gallery-masonry')->name('gallery-masonry');
-        Route::view('masonry-gallery-with-disc', 'apps.masonry-gallery-with-disc')->name('masonry-gallery-with-disc');
-        Route::view('gallery-hover', 'apps.gallery-hover')->name('gallery-hover');
-    });
-
-    Route::prefix('blog')->group(function () {
-        Route::view('index', 'apps.blog')->name('blog');
-        Route::view('blog-single', 'apps.blog-single')->name('blog-single');
-        Route::view('add-post', 'apps.add-post')->name('add-post');
-    });
-
-
-    Route::view('faq', 'apps.faq')->name('faq');
-
-    Route::prefix('job-search')->group(function () {
-        Route::view('job-cards-view', 'apps.job-cards-view')->name('job-cards-view');
-        Route::view('job-list-view', 'apps.job-list-view')->name('job-list-view');
-        Route::view('job-details', 'apps.job-details')->name('job-details');
-        Route::view('job-apply', 'apps.job-apply')->name('job-apply');
-    });
-
-    Route::prefix('learning')->group(function () {
-        Route::view('learning-list-view', 'apps.learning-list-view')->name('learning-list-view');
-        Route::view('learning-detailed', 'apps.learning-detailed')->name('learning-detailed');
-    });
-
-    Route::prefix('maps')->group(function () {
-        Route::view('map-js', 'apps.map-js')->name('map-js');
-        Route::view('vector-map', 'apps.vector-map')->name('vector-map');
-    });
-
-    Route::prefix('editors')->group(function () {
-        Route::view('summernote', 'apps.summernote')->name('summernote');
-        Route::view('ckeditor', 'apps.ckeditor')->name('ckeditor');
-        Route::view('simple-mde', 'apps.simple-mde')->name('simple-mde');
-        Route::view('ace-code-editor', 'apps.ace-code-editor')->name('ace-code-editor');
-    });
-
-    Route::view('knowledgebase', 'apps.knowledgebase')->name('knowledgebase');
-    Route::view('support-ticket', 'apps.support-ticket')->name('support-ticket');
-    Route::view('landing-page', 'pages.landing-page')->name('landing-page');
-
-    Route::prefix('layouts')->group(function () {
-        Route::view('compact-sidebar', 'admin_unique_layouts.compact-sidebar'); //default //Dubai
-        Route::view('box-layout', 'admin_unique_layouts.box-layout');    //default //New York //
-        Route::view('dark-sidebar', 'admin_unique_layouts.dark-sidebar');
-
-        Route::view('default-body', 'admin_unique_layouts.default-body');
-        Route::view('compact-wrap', 'admin_unique_layouts.compact-wrap');
-        Route::view('enterprice-type', 'admin_unique_layouts.enterprice-type');
-
-        Route::view('compact-small', 'admin_unique_layouts.compact-small');
-        Route::view('advance-type', 'admin_unique_layouts.advance-type');
-        Route::view('material-layout', 'admin_unique_layouts.material-layout');
-
-        Route::view('color-sidebar', 'admin_unique_layouts.color-sidebar');
-        Route::view('material-icon', 'admin_unique_layouts.material-icon');
-        Route::view('modern-layout', 'admin_unique_layouts.modern-layout');
-    });
+//    Route::view('comingsoon', 'comingsoon.comingsoon')->name('comingsoon');
+//    Route::view('comingsoon-bg-video', 'comingsoon.comingsoon-bg-video')->name('comingsoon-bg-video');
+//    Route::view('comingsoon-bg-img', 'comingsoon.comingsoon-bg-img')->name('comingsoon-bg-img');
+//
+//    Route::view('basic-template', 'email-templates.basic-template')->name('basic-template');
+//    Route::view('email-header', 'email-templates.email-header')->name('email-header');
+//    Route::view('template-email', 'email-templates.template-email')->name('template-email');
+//    Route::view('template-email-2', 'email-templates.template-email-2')->name('template-email-2');
+//    Route::view('ecommerce-templates', 'email-templates.ecommerce-templates')->name('ecommerce-templates');
+//    Route::view('email-order-success', 'email-templates.email-order-success')->name('email-order-success');
+//
+//
+//    Route::prefix('gallery')->group(function () {
+//        Route::view('index', 'apps.gallery')->name('gallery');
+//        Route::view('with-gallery-description', 'apps.gallery-with-description')->name('gallery-with-description');
+//        Route::view('gallery-masonry', 'apps.gallery-masonry')->name('gallery-masonry');
+//        Route::view('masonry-gallery-with-disc', 'apps.masonry-gallery-with-disc')->name('masonry-gallery-with-disc');
+//        Route::view('gallery-hover', 'apps.gallery-hover')->name('gallery-hover');
+//    });
+//
+//    Route::prefix('blog')->group(function () {
+//        Route::view('index', 'apps.blog')->name('blog');
+//        Route::view('blog-single', 'apps.blog-single')->name('blog-single');
+//        Route::view('add-post', 'apps.add-post')->name('add-post');
+//    });
+//
+//
+//    Route::view('faq', 'apps.faq')->name('faq');
+//
+//    Route::prefix('job-search')->group(function () {
+//        Route::view('job-cards-view', 'apps.job-cards-view')->name('job-cards-view');
+//        Route::view('job-list-view', 'apps.job-list-view')->name('job-list-view');
+//        Route::view('job-details', 'apps.job-details')->name('job-details');
+//        Route::view('job-apply', 'apps.job-apply')->name('job-apply');
+//    });
+//
+//    Route::prefix('learning')->group(function () {
+//        Route::view('learning-list-view', 'apps.learning-list-view')->name('learning-list-view');
+//        Route::view('learning-detailed', 'apps.learning-detailed')->name('learning-detailed');
+//    });
+//
+//    Route::prefix('maps')->group(function () {
+//        Route::view('map-js', 'apps.map-js')->name('map-js');
+//        Route::view('vector-map', 'apps.vector-map')->name('vector-map');
+//    });
+//
+//    Route::prefix('editors')->group(function () {
+//        Route::view('summernote', 'apps.summernote')->name('summernote');
+//        Route::view('ckeditor', 'apps.ckeditor')->name('ckeditor');
+//        Route::view('simple-mde', 'apps.simple-mde')->name('simple-mde');
+//        Route::view('ace-code-editor', 'apps.ace-code-editor')->name('ace-code-editor');
+//    });
+//
+//    Route::view('knowledgebase', 'apps.knowledgebase')->name('knowledgebase');
+//    Route::view('support-ticket', 'apps.support-ticket')->name('support-ticket');
+//    Route::view('landing-page', 'pages.landing-page')->name('landing-page');
+//
+//    Route::prefix('layouts')->group(function () {
+//        Route::view('compact-sidebar', 'admin_unique_layouts.compact-sidebar'); //default //Dubai
+//        Route::view('box-layout', 'admin_unique_layouts.box-layout');    //default //New York //
+//        Route::view('dark-sidebar', 'admin_unique_layouts.dark-sidebar');
+//
+//        Route::view('default-body', 'admin_unique_layouts.default-body');
+//        Route::view('compact-wrap', 'admin_unique_layouts.compact-wrap');
+//        Route::view('enterprice-type', 'admin_unique_layouts.enterprice-type');
+//
+//        Route::view('compact-small', 'admin_unique_layouts.compact-small');
+//        Route::view('advance-type', 'admin_unique_layouts.advance-type');
+//        Route::view('material-layout', 'admin_unique_layouts.material-layout');
+//
+//        Route::view('color-sidebar', 'admin_unique_layouts.color-sidebar');
+//        Route::view('material-icon', 'admin_unique_layouts.material-icon');
+//        Route::view('modern-layout', 'admin_unique_layouts.modern-layout');
+//    });
 
     Route::get('layout-{light}', function ($light) {
         session()->put('layout', $light);

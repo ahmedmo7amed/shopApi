@@ -28,6 +28,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
+            ->emailVerification()
+            ->profile()
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -62,7 +65,7 @@ class AdminPanelProvider extends PanelProvider
 
                 NavigationItem::make('Products')
                     ->icon('heroicon-o-shopping-bag')
-                    ->url('/products')
+                    ->url('/admin/products')
                     ->visible(fn() => true),
             ]);
     }

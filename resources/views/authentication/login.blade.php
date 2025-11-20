@@ -1,3 +1,11 @@
+@if(Illuminate\Support\Facades\Auth::user() && Illuminate\Support\Facades\Auth::user()->hasVerifiedEmail())
+
+    <script>window.location.href = "{{ route('home') }}";</script>
+
+@endif
+@if(Illuminate\Support\Facades\Auth::user())
+    <script>window.location.href = "{{ route('verification.notice') }}";</script>
+@endif
 @extends('layouts.authentication.master')
 @section('title', 'Login')
 
@@ -15,10 +23,27 @@
             <div>
                <div><a class="logo" href="{{ route('index') }}"><img class="img-fluid for-light" src="{{asset('assets/images/logo/login.png')}}" alt="looginpage"><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt="looginpage"></a></div>
                <div class="login-main">
+
+                   @include('layouts.flash_messages')
+
                   <form class="theme-form" action="{{route('login')}}" method="POST">
                       @csrf
                      <h4>Sign in to account</h4>
                      <p>Enter your email & password to login</p>
+
+
+
+                     <div class="form-group">
+                        <label class="col-form-label">Email Address</label>
+                        <input class="form-control" type="email" required="" placeholder="Test@gmail.com" name="email">
+
+                     </div>
+                     <div class="form-group">
+                        <label class="col-form-label">Password</label>
+                        <input class="form-control" type="password" name="password" required="" placeholder="*********">
+                        <div class="show-hide"><span class="show">                         </span></div>
+
+                     </div>
 
                       <!-- عرض الأخطاء هنا -->
                       @if(session('error'))
@@ -38,17 +63,6 @@
                           </div>
                       @endif
 
-                     <div class="form-group">
-                        <label class="col-form-label">Email Address</label>
-                        <input class="form-control" type="email" required="" placeholder="Test@gmail.com">
-
-                     </div>
-                     <div class="form-group">
-                        <label class="col-form-label">Password</label>
-                        <input class="form-control" type="password" name="login[password]" required="" placeholder="*********">
-                        <div class="show-hide"><span class="show">                         </span></div>
-
-                     </div>
                      <div class="form-group mb-0">
                         <div class="checkbox p-0">
                            <input id="checkbox1" type="checkbox">

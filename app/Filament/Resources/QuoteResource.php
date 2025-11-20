@@ -185,7 +185,18 @@ class QuoteResource extends Resource
                                                     ]
                                                 );
                                             }),
-                                        Tables\Actions\EditAction::make(),
+                                        Tables\Actions\Action::make('view')
+                                            ->label('View')
+                                            ->icon('heroicon-o-eye')
+                                            ->url(fn ($record) => url("/admin/quote-email?quoteId={$record->id}"))
+                                        ->openUrlInNewTab(),
+                                        Tables\Actions\Action::make('send_email')
+                                        ->lable('send')
+                                        ->action(fn ($record) => app('App\Http\Controllers\QuoteController')->sendQuote($record->id))
+                                        ->requiresConfirmation()
+                                        ->color('success')
+                                    ,
+                                Tables\Actions\EditAction::make(),
                                         Tables\Actions\DeleteAction::make(),
                                         Tables\Actions\RestoreAction::make(),
                                     ])

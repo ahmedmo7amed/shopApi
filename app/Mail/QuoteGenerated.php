@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Quote;
 
 
+
 class QuoteGenerated extends Mailable
 {
     use Queueable, SerializesModels;
@@ -18,14 +19,23 @@ class QuoteGenerated extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public Quote $quote)
+
+    public $quote;
+
+    public function __construct(Quote $quote)
     {
-        //
+        $this->quote = $quote;
     }
+
     public function build()
     {
-        return $this->markdown('emails.quotes.generated')
-            ->subject('Your Tank Manufacturing Quote - ' . config('app.name'));
+//        return $this->markdown('emails.quotes.generated')
+//            ->subject('Your Tank Manufacturing Quote - ' . config('app.name'));
+        return $this->view('emails.quotes.generated')
+            ->subject('Your Tank Manufacturing Quote - ' . config('app.name'))
+            ->with([
+                'quote' => $this->quote,
+            ]);
     }
     /**
      * Get the message envelope.
@@ -43,7 +53,7 @@ class QuoteGenerated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.quotes.generated',
         );
     }
 
