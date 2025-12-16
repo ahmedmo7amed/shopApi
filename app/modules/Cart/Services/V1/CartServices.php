@@ -14,11 +14,11 @@ class CartServices
         $this->cartRepository = $cartRepository;
     }
 
-    
      public function getCart($userId)
     {
         $items = $this->cartRepository->getUserCart($userId);
-        $total = $items->sum(fn ($item) => optional($item->product)->price * $item->quantity);
+        $total = $items->sum(fn ($item) =>
+        optional($item->product)->price * $item->quantity);
 
         return [
             'items' => $items,
@@ -28,17 +28,20 @@ class CartServices
 
     public function addItem($userId, $productId, $quantity)
     {
-        return $this->cartRepository->addOrUpdate($userId, $productId, $quantity);
+        return $this->cartRepository
+        ->addOrUpdate($userId, $productId, $quantity);
     }
 
     public function updateItem($userId, $productId, $quantity)
     {
-        return $this->cartRepository->updateQuantity($userId, $productId, $quantity);
+        return $this->cartRepository
+        ->updateQuantity($userId, $productId, $quantity);
     }
 
     public function removeItem($userId, $productId)
     {
-        return $this->cartRepository->removeItem($userId, $productId);
+        return $this->cartRepository
+        ->removeItem($userId, $productId);
     }
 
     public function clearCart($userId)

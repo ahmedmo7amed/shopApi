@@ -39,10 +39,11 @@ class ProductServices
         {
             $products = $this->productRepository->getProductById($id);
             $relatedProducts = $this->related($products->category_id, $products->id);
-             
+
             return [
                 'product' => new ProductResource($products),
-                'related_products' => $relatedProducts
+                'related_products' => $relatedProducts,
+                'categories' => $products->category
             ];
         }
         public function getProductsByCategory($categorySlug, $perPage = 10)
@@ -55,7 +56,7 @@ class ProductServices
                 'products' => $products,
             ];
         }
-        
+
         public function createProduct($data)
         {
             $products = $this->productRepository->createProduct($data);

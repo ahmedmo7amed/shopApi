@@ -2,40 +2,53 @@
 
 namespace Modules\Invoice\Repositories\V1;
 use Modules\Cart\Models\Cart;
-use Modules\Cart\Repositories\V1\CartRepositoryInterface;
 
-class CartRepository 
+class CartRepository
 {
     public function getUserCart($userId)
     {
-        
-        return Cart::with('product')->where('user_id', $userId)->get();
+        $data = Cart::with('product')
+        ->where('user_id', $userId)->get();
+        return response()->json(["cart_items" => $data,
+        "message" => "User cart retrieved successfully"]);
     }
 
     public function addOrUpdate($userId, $productId, $quantity)
     {
-        return Cart::updateOrCreate(
-            ['user_id' => $userId, 'product_id' => $productId],
-            ['quantity' => $quantity]
-        );
+        $data = ["item" => Cart::updateOrCreate(
+            [
+                'user_id' => $userId,
+                'product_id' => $productId
+            ],
+            [
+                'quantity' => $quantity
+            ]
+        ),
+            "message" => "Item added/updated in cart" ,200];
+        return response()->json($data);
     }
 
     public function updateQuantity($userId, $productId, $quantity)
     {
-        return Cart::where('user_id', $userId)
+        $data = ["item" => Cart::where('user_id', $userId)
             ->where('product_id', $productId)
-            ->update(['quantity' => $quantity]);
+            ->update(['quantity' => $quantity]),
+            "message" => "Cart item quantity updated" ,200];
+        return response()->json($data);
     }
 
     public function removeItem($userId, $productId)
     {
-        return Cart::where('user_id', $userId)
+        $data = ["item" => Cart::where('user_id', $userId)
             ->where('product_id', $productId)
-            ->delete();
+            ->delete(),"message" => "Item removed from cart" ,200];
+        return response()->json($data);
     }
 
     public function clearCart($userId)
     {
-        return Cart::where('user_id', $userId)->delete();
+        $data = ["item" => Cart::where('user_id', $userId)->delete(),
+            "message" => "Cart cleared" ,200];
+        return response()->json($data);
     }
 }

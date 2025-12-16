@@ -2,7 +2,9 @@
 
 namespace Modules\Product\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
+use Modules\Product\Models\Product;
 
 class ProductOption extends Model
 {

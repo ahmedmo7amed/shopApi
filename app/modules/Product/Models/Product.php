@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Quote;
-use App\Models\Cart;
+use Modules\Cart\Models\Cart;
 use App\Models\Wishlist;
 use App\Models\Review;
 use Modules\Category\Models\Category;
+use Modules\Product\Models\ProductOption;
+use Modules\Product\Models\ProductImage;
 
 
 

@@ -2,6 +2,8 @@
 
 namespace Modules\Product\Repositories;
 use Modules\Product\Models\Product;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 
 class ProductRepository
@@ -12,25 +14,32 @@ class ProductRepository
         {
             $this->productModel = $productModel;
         }
-        
-        public function getAllProducts($filters = [], $perPage = 12)
+
+        public function getAllProducts($filters = [], $perPage = 12): LengthAwarePaginator
         {
-            return Product::with('options.values')
-            ->when(isset($filters['category_id']), function ($query) use ($filters) {
-                $query->where('category_id', $filters['category_id']);
-            })
-            ->when(isset($filters['option_id']), function ($query) use ($filters) {
-                $query->whereHas('options', function ($query) use ($filters) {
-                    $query->where('id', $filters['option_id']);
-                });
-            })
+            return $this->productModel
+            ->with('options.values', 'category')
+            ->when( !empty($filters['category_id']),
+                fn (Builder $q) => $q
+                ->where('category_id', $filters['category_id']))
+            ->when( !empty($filters['option_id']),
+                fn (Builder $q) => $q
+                ->whereHas('options', fn (Builder $q) => $q
+                ->where('id', $filters['option_id'])))
             ->paginate($perPage);
         }
         public function search($query, $perPage = 10)
         {
-            return Product::where('name', 'like', "%$query%")
+            return $this->productModel
+            ->where('name', 'like', "%$query%")
                 ->orWhere('description', 'like', "%$query%")
                 ->paginate($perPage);
+        }
+         public function findWithOptions(int $id): Product
+        {
+            return $this->productModel
+                ->with('options.values')
+                ->findOrFail($id);
         }
         public function related($categoryId, $excludeId, $limit = 4)
         {

@@ -37,4 +37,5 @@ class CustomerRepository
     {
         return $this->customerModel->findOrFail($id)->delete();
     }
+    
 }
