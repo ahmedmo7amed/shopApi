@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace Modules\Quote\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Modules\Product\Models\Product;
 
 
 use Illuminate\Database\Eloquent\Model;
