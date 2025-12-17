@@ -7,6 +7,8 @@ return [
     App\Providers\ViewServiceProvider::class,
     Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
     App\Providers\FortifyServiceProvider::class,
+   
+
 
 
 ];

@@ -2,37 +2,92 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\V1\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Handle an incoming authentication request.
+     * Handle login request.
      */
     public function store(LoginRequest $request): Response
     {
-        $request->authenticate();
+        $credentials = $request->only('email', 'password');
 
-        $request->session()->regenerate();
+        try {
+            if (! $token = JWTAuth::attempt($credentials)) {
 
-        return response()->noContent();
+
+                return response([
+                    'success' => false,
+                    'message' => 'Invalid credentials'
+                ], 401);
+            }
+        } catch (JWTException $e) {
+                //create role for user
+                // auth()->user()->assignRole('Customer');
+
+            return response([
+                'success' => false,
+                'message' => 'Could not create token'
+            ], 500);
+        }
+
+        return response([
+            'success' => true,
+            'message' => 'Login successful',
+            'token' => $token,
+            'type' => 'bearer',
+            'user' => auth()->user(),
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ], 200);
     }
 
     /**
-     * Destroy an authenticated session.
+     * Refresh JWT token.
      */
-    public function destroy(Request $request): Response
+    public function refresh(): Response
     {
-        Auth::guard('web')->logout();
+        try {
+            $newToken = JWTAuth::refresh(JWTAuth::getToken());
 
-        $request->session()->invalidate();
+            return response([
+                'success' => true,
+                'message' => 'Token refreshed',
+                'token' => $newToken,
+                'type' => 'bearer',
+                'user' => auth()->user(),
+                'expires_in' => auth()->factory()->getTTL() * 60
+            ], 200);
+        } catch (JWTException $e) {
+            return response([
+                'success' => false,
+                'message' => 'Could not refresh token'
+            ], 500);
+        }
+    }
 
-        $request->session()->regenerateToken();
+    /**
+     * Logout user (invalidate token).
+     */
+    public function destroy(): Response
+    {
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
 
-        return response()->noContent();
+            return response([
+                'success' => true,
+                'message' => 'Logout successful'
+            ], 200);
+        } catch (JWTException $e) {
+            return response([
+                'success' => false,
+                'message' => 'Could not invalidate token'
+            ], 500);
+        }
     }
 }

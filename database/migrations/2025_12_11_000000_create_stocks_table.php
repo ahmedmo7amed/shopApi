@@ -14,20 +14,34 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stocks', function (Blueprint $table) {
+            // $table->unsignedBigInteger('product_id');
+            // $table->foreign('warehouse_id')
+            // ->references('id')
+            // ->on('warehouses')
+            // ->cascadeOnDelete();
+
+            // $table->bigInteger('quantity_on_hand')->default(0);
+            // $table->bigInteger('quantity_reserved')->default(0);
+            // $table->bigInteger('version')->default(1); // optimistic locking
+
+            // $table->primary(['product_id','warehouse_id']);
+            // $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+            // $table->foreign('warehouse_id')->references('id')->on('warehouses')->nullOnDelete();
+            // $table->text('note')->nullable();
+            // $table->timestamps();
             $table->id();
-             $table->unsignedBigInteger('product_id');
-        $table->unsignedBigInteger('warehouse_id');
 
-        $table->bigInteger('quantity_on_hand')->default(0);
-        $table->bigInteger('quantity_reserved')->default(0);
-        $table->bigInteger('version')->default(1); // optimistic locking
+    $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+    $table->foreignId('warehouse_id')->nullable()->constrained()->nullOnDelete();
 
-        $table->primary(['product_id','warehouse_id']);
-        $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
-        $table->foreign('warehouse_id')->references('id')->on('warehouses')->cascadeOnDelete();
-         $table->text('note')->nullable();
-            $table->timestamps();
+    $table->bigInteger('quantity_on_hand')->default(0);
+    $table->bigInteger('quantity_reserved')->default(0);
+    $table->bigInteger('version')->default(1);
 
+    $table->unique(['product_id', 'warehouse_id']);
+
+    $table->text('note')->nullable();
+    $table->timestamps();
         });
     }
 

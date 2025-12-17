@@ -16,8 +16,8 @@ class AdminUserSeeder extends Seeder
     {
         User::create(
             [
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
+            'name' => 'Admin1',
+            'email' => 'ahmed@admin.com',
             'password' => Hash::make('password'),
             ],
         );

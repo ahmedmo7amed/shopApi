@@ -19,9 +19,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
 
-        $this->app->singleton(RegisterViewResponse::class, function () {
-            return view('authentication.register');
-        });
+        // $this->app->singleton(RegisterViewResponse::class, function () {
+        //     return view('authentication.register');
+        // });
     }
 
     /**
@@ -38,5 +38,15 @@ class AppServiceProvider extends ServiceProvider
             return $user->hasRole('admin');
         });
         Gate::policy(Role::class,RolePolicy::class);
+
+          $this->app->bind('mailer', function ($app) {
+        $config = $app->make('config')->get('mail');
+
+        if ($config['default'] === 'smtp') {
+            $config['mailers']['smtp']['local_domain'] = 'localhost';
+        }
+
+        return new \Illuminate\Mail\MailManager($app);
+    });
     }
 }

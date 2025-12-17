@@ -16,7 +16,8 @@
         "laravel/framework": "^11.31",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "spatie/laravel-permission": "^6.10"
+        "spatie/laravel-permission": "^6.10",
+        "tymon/jwt-auth": "^2.2"
     },
     "require-dev": {
         "doctrine/dbal": "^4.2",
@@ -33,10 +34,15 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Modules\\": "app/modules/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Mudules\\": "modules/"
         }
+        ,
+        "files": [
+            "app/Helpers/log_helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

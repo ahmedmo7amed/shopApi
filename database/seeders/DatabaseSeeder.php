@@ -6,6 +6,8 @@ use App\Models\User;
 use Database\Seeders\AdminUserSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ProductSeeder;
+use Database\Seeders\PermissionsSeeder;
+use Database\Seeders\RoleSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -23,6 +25,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ProductSeeder::class,
             PermissionsSeeder::class,
+            RoleSeeder::class,
 
         ]);
 
@@ -38,6 +41,8 @@ class DatabaseSeeder extends Seeder
         $role = Role::create(['name' => 'admin']);
         //$role = Role::create(['name' => 'user']);
         $user->assignRole($role);
+
+
 
     }
 }

@@ -15,7 +15,7 @@ class PermissionsSeeder extends Seeder
     {
         Permission::firstOrCreate([
             'name' => 'create cart items',
-            'guard_name' => 'web'
+            'guard_name' => 'api'
         ]);
     }
 }

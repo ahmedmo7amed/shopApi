@@ -3,7 +3,7 @@
 namespace Modules\Cart\Http\Controllers\V1;
 
 use App\Filament\Resources\CartResource;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use Filament\Resources\Resource;
 use Modules\Product\Models\Product;

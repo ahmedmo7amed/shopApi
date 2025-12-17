@@ -13,15 +13,24 @@ use Spatie\Permission\Traits\HasRoles;
 use Modules\Product\Models\Product;
 use App\Models\Review;
 use Modules\Order\Models\Order;
-use App\Models\Cart;
+use Modules\Cart\Models\Cart;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-
-class User extends Authenticatable implements FilamentUser , MustVerifyEmail
+//class User extends Authenticatable implements FilamentUser , MustVerifyEmail
+class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable ,  HasRoles;
-
+    public function getJWTIdentifier()
+        {
+            return $this->getKey(); // عادةً ما يكون هذا هو حقل 'id'
+        }
+    public function getJWTCustomClaims()
+        {
+            return [];
+        }
+    protected $guard_name = 'api';
     /**
      * The attributes that are mass assignable.
      *
